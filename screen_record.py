@@ -59,25 +59,29 @@ class ScreenRecord(object):
         return time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime(time.time()))
 
     def delete_file(self, file_name, _type):
-        delete_video_command = self.adb + "shell rm /sdcard/{0}.mp4".format(file_name)
-        delete_picture_command = self.adb + "shell rm /sdcard/{0}.png".format(file_name)
         if _type == "video":
-            os.popen(delete_video_command)
+            self.delete_video(file_name)
         else:
-            os.popen(delete_picture_command)
+            self.delete_image(file_name)
 
-# C:\Users\saas\Desktop\test53
+    def delete_image(self, image_name):
+        delete_picture_command = self.adb + "shell rm /sdcard/{0}.png".format(image_name)
+        os.popen(delete_picture_command)
+
+    def delete_video(self, video_name):
+        delete_video_command = self.adb + "shell rm /sdcard/{0}.mp4".format(video_name)
+        os.popen(delete_video_command)
+
+
 s = ScreenRecord("1bd5686a")
 print s.get_devices()
 name = s.get_time()
 print name
 # print s.get_pid()
 s.start(name)
-time.sleep(5)
+time.sleep(10)
 s.stop(r"C:\Users\saas\Desktop\test53")
-# ScreenRecord("1bd5686a").start("test")
-# ScreenRecord("1bd5686a").get_screen_capture(r"C:\Users\saas\Desktop\test53")
-# os.popen("adb -s 1bd5686a shell screenrecord /sdcard/filename.mp4")
+
 
 
 
